@@ -1,4 +1,5 @@
 import { firebaseConfig, firebaseListo, negocio } from "./firebase-config.js";
+import { iniciarVistaPrevia, actualizarVistaPrevia } from "./preview.js";
 
 const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
 let db = null, dbApi = null;
@@ -131,6 +132,14 @@ function actualizar() {
     li.append(b, s); return li;
   }));
   $("nota-fecha").hidden = !(fecha.value && fecha.value < lim48Str);
+  const hex = Object.fromEntries(COLORES);
+  actualizarVistaPrevia({
+    cantidad: +d.cantidad,
+    colores: elegidos.map((c) => hex[c]),
+    envoltorio: d.envoltorio,
+    extras: [...contExtras.querySelectorAll("input:checked")].map((i) => i.value),
+    cinta: $("con-cinta").checked ? $("cinta").value.trim() : ""
+  });
   $("error-ramo").textContent = "";
 }
 
@@ -176,6 +185,7 @@ async function cargarBanner() {
   el.append(a); el.hidden = false;
 }
 
+iniciarVistaPrevia();
 actualizar();
 await iniciarFirebase();
 cargarGaleria();
