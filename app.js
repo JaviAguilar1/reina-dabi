@@ -57,20 +57,6 @@ const COLORES = [
 const EXTRAS = ["🦋 Mariposas", "🤍 Perlas", "👑 Corona", "🍫 Bombones", "💡 Luces", "💌 Tarjeta"];
 const MAX_COLORES = 3;
 
-// ---------- Precios (muestra; se manejan desde el panel) ----------
-let config = { mostrarPrecios: true, precios: { 3: 10000, 5: 14000, 7: 18000, 14: 32000, 21: 40000 }, rosaExtra: 1850 };
-const pesos = (n) => "$" + Math.round(n).toLocaleString("es-AR");
-function precioEstimado(cant) {
-  const tabla = Object.entries(config.precios || {}).map(([k, v]) => [+k, +v]).sort((a, b) => a[0] - b[0]);
-  if (!tabla.length) return null;
-  const base = [...tabla].reverse().find(([k]) => k <= cant) || tabla[0];
-  return base[1] + Math.max(0, cant - base[0]) * (+config.rosaExtra || 0);
-}
-async function cargarConfig() {
-  if (!db) return;
-  const s = await dbApi.get(dbApi.ref(db, "web/config")).catch(() => null);
-  if (s && s.exists()) config = { ...config, ...s.val() };
-}
 const $ = (id) => document.getElementById(id);
 const elegidos = [];
 
@@ -136,8 +122,6 @@ function actualizar() {
     ["Cinta", d.cinta ? `"${d.cinta}"` : "Sin cinta"], ["Extras", d.extras || "Ninguno"],
     ["Fecha", d.fecha || "A definir"], ["Entrega", d.entrega]
   ];
-  const p = config.mostrarPrecios ? precioEstimado(+d.cantidad) : null;
-  if (p) filas.push(["Precio estimado", `desde ${pesos(p)}`]);
   $("resumen").replaceChildren(...filas.map(([k, v]) => {
     const li = document.createElement("li");
     const b = document.createElement("b"); b.textContent = k;
@@ -153,8 +137,6 @@ function mensaje(d) {
   if (d.cinta) l.push(`• Cinta con mensaje: "${d.cinta}"`);
   if (d.extras) l.push(`• Extras: ${d.extras}`);
   l.push(`• Para: ${d.fecha || "a coordinar"}`, `• Entrega: ${d.entrega}`);
-  const p = config.mostrarPrecios ? precioEstimado(+d.cantidad) : null;
-  if (p) l.push(`• Precio estimado: desde ${pesos(p)}`);
   if (d.comentarios) l.push(`• Comentarios: ${d.comentarios}`);
   l.push("", "¿Me pasan el presupuesto? ¡Gracias!");
   return l.join("\n");
@@ -173,5 +155,3 @@ $("enviar-ramo").addEventListener("click", (ev) => {
 actualizar();
 await iniciarFirebase();
 cargarGaleria();
-await cargarConfig();
-actualizar();

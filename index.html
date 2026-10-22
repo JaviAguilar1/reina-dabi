@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff8f4">
 <title>Reina Dabi · Ramos de flores eternas</title>
 <meta name="description" content="Ramos de rosas eternas hechos a mano en San Fernando, Buenos Aires. Personalizados para cumpleaños, quinceañeras, egresados, aniversarios y más.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -135,6 +136,15 @@ textarea{resize:vertical;min-height:70px}
 .resumen .btn{width:100%;justify-content:center}
 .nota{font-size:.85rem;color:var(--gris);margin-top:.7rem;text-align:center}
 .error{color:#b42318;font-weight:700;font-size:.9rem;margin-top:.5rem;text-align:center;min-height:1.2em}
+/* iPhone / Android: sin zoom al escribir, controles parejos, respeta la barra inferior */
+html{-webkit-text-size-adjust:100%}
+select,input[type=text],input[type=date],textarea{font-size:16px;min-height:46px;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--bordo) 50%),linear-gradient(135deg,var(--bordo) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:2.4rem}
+input[type=date]{display:block}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+.btn,.color,.opcion span{-webkit-tap-highlight-color:transparent}
+.wa-flotante{bottom:calc(16px + env(safe-area-inset-bottom));right:calc(16px + env(safe-area-inset-right))}
+footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
 @media (min-width:860px){.arm-grid{grid-template-columns:1.25fr .75fr}}
 </style>
 </head>
@@ -234,7 +244,8 @@ textarea{resize:vertical;min-height:70px}
           <div class="campo"><span class="etiqueta">Entrega</span>
             <div class="opciones">
               <label class="opcion"><input type="radio" name="entrega" value="Punto de encuentro" checked><span>📍 Punto de encuentro</span></label>
-              <label class="opcion"><input type="radio" name="entrega" value="Envío por Uber"><span>🚗 Envío por Uber</span></label>
+              <label class="opcion"><input type="radio" name="entrega" value="Retiro"><span>🏠 Retiro</span></label>
+              <label class="opcion"><input type="radio" name="entrega" value="Envío"><span>🚗 Envío</span></label>
             </div></div>
           <div class="campo"><label for="nombre">Tu nombre <small>(opcional)</small></label><input type="text" id="nombre" maxlength="40"></div>
           <div class="campo" style="margin-bottom:0"><label for="comentarios">Comentarios <small>(opcional)</small></label><textarea id="comentarios" maxlength="300" placeholder="Ej: tengo una foto de referencia"></textarea></div>

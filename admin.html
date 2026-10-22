@@ -72,7 +72,6 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
     <div class="tabs" role="tablist">
       <button role="tab" aria-selected="true" data-tab="stats">📊 Estadísticas</button>
       <button role="tab" aria-selected="false" data-tab="fotos">🖼️ Galería</button>
-      <button role="tab" aria-selected="false" data-tab="precios">💲 Precios</button>
     </div>
 
     <section id="tab-stats">
@@ -105,18 +104,6 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         </div>
         <p class="msj" id="fotos-msj"></p>
         <div class="lista" id="lista"></div>
-      </div>
-    </section>
-    <section id="tab-precios" hidden>
-      <div class="card">
-        <h2>Precios en el armador</h2>
-        <p class="ayuda">Si está activado, el armador muestra "Precio estimado: desde $X" según la cantidad de rosas. Para cantidades que no están en la tabla se toma la anterior + el valor por rosa extra.</p>
-        <label style="display:flex;gap:.5rem;align-items:center;margin-top:1rem"><input type="checkbox" id="mostrar-precios"> Mostrar precios en la página</label>
-        <table style="margin-top:1rem"><thead><tr><th>Rosas</th><th class="n">Precio ($)</th><th></th></tr></thead><tbody id="t-precios"></tbody></table>
-        <div class="subir" style="margin-top:.8rem"><button class="sec" id="agregar-precio">+ Agregar fila</button></div>
-        <label for="rosa-extra">Valor por rosa extra ($)</label><input type="text" id="rosa-extra" inputmode="numeric" style="max-width:200px">
-        <p class="msj" id="precios-msj"></p>
-        <button id="guardar-precios">Guardar precios</button>
       </div>
     </section>
   </div>
@@ -154,13 +141,13 @@ A.onAuthStateChanged(auth, async (user) => {
   if (!rol) { await A.signOut(auth); $("login").hidden = false; $("login-msj").textContent = "Este usuario no tiene permiso para el panel."; return; }
   $("rol").textContent = `${user.email} · ${rol === "admin" ? "Administrador" : "Cliente"}`;
   $("sesion").hidden = false; $("app").hidden = false;
-  escucharStats(); escucharGaleria(); cargarPrecios();
+  escucharStats(); escucharGaleria();
 });
 
 // ---------- Pestañas ----------
 document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => {
   document.querySelectorAll("[data-tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
-  for (const t of ["stats", "fotos", "precios"]) $(`tab-${t}`).hidden = b.dataset.tab !== t;
+  for (const t of ["stats", "fotos"]) $(`tab-${t}`).hidden = b.dataset.tab !== t;
 }));
 
 // ---------- Estadísticas ----------
@@ -270,37 +257,6 @@ $("btn-importar").onclick = async () => {
   $("btn-importar").disabled = false;
 };
 
-// ---------- Precios ----------
-const MUESTRA = { mostrarPrecios: true, precios: { 3: 10000, 5: 14000, 7: 18000, 14: 32000, 21: 40000 }, rosaExtra: 1850 };
-function filaPrecio(cant = "", precio = "") {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `<td><input type="text" inputmode="numeric" class="p-cant" style="max-width:90px"></td><td class="n"><input type="text" inputmode="numeric" class="p-precio" style="max-width:140px;text-align:right"></td><td class="n"><button class="mal" aria-label="Quitar fila">✕</button></td>`;
-  tr.querySelector(".p-cant").value = cant; tr.querySelector(".p-precio").value = precio;
-  tr.querySelector("button").onclick = () => tr.remove();
-  $("t-precios").append(tr);
-}
-async function cargarPrecios() {
-  const v = await D.get(D.ref(db, "web/config")).then((s) => s.val()).catch(() => null);
-  const c = { ...MUESTRA, ...(v || {}) };
-  $("mostrar-precios").checked = !!c.mostrarPrecios;
-  $("rosa-extra").value = c.rosaExtra ?? "";
-  $("t-precios").innerHTML = "";
-  Object.entries(c.precios || {}).sort((a, b) => a[0] - b[0]).forEach(([k, p]) => filaPrecio(k, p));
-  if (!v) { $("precios-msj").textContent = "Mostrando precios de muestra (todavía no se guardaron)."; $("precios-msj").className = "msj"; }
-}
-$("agregar-precio").onclick = () => filaPrecio();
-$("guardar-precios").onclick = async () => {
-  const precios = {}; let mal = false;
-  $("t-precios").querySelectorAll("tr").forEach((tr) => {
-    const k = parseInt(tr.querySelector(".p-cant").value, 10), p = parseInt(tr.querySelector(".p-precio").value.replace(/\D/g, ""), 10);
-    if (k >= 1 && k <= 100 && p > 0) precios[k] = p; else if (tr.querySelector(".p-cant").value || tr.querySelector(".p-precio").value) mal = true;
-  });
-  const extra = parseInt($("rosa-extra").value.replace(/\D/g, ""), 10) || 0;
-  const m = $("precios-msj");
-  if (mal) { m.textContent = "Revisá las filas: cantidad de 1 a 100 y precio mayor a 0."; m.className = "msj mal"; return; }
-  try { await D.set(D.ref(db, "web/config"), { mostrarPrecios: $("mostrar-precios").checked, precios, rosaExtra: extra }); m.textContent = "Precios guardados ✔"; m.className = "msj ok"; }
-  catch { m.textContent = "No se pudo guardar."; m.className = "msj mal"; }
-};
 </script>
 </body>
 </html>
