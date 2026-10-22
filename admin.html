@@ -72,6 +72,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
     <div class="tabs" role="tablist">
       <button role="tab" aria-selected="true" data-tab="stats">📊 Estadísticas</button>
       <button role="tab" aria-selected="false" data-tab="fotos">🖼️ Galería</button>
+      <button role="tab" aria-selected="false" data-tab="banner">📣 Banner</button>
     </div>
 
     <section id="tab-stats">
@@ -104,6 +105,19 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         </div>
         <p class="msj" id="fotos-msj"></p>
         <div class="lista" id="lista"></div>
+      </div>
+    </section>
+    <section id="tab-banner" hidden>
+      <div class="card">
+        <h2>Banner de fecha especial</h2>
+        <p class="ayuda">Una franja arriba de la página para fechas como Día de la Madre, San Valentín o Egresados. Se ve al instante cuando la activás.</p>
+        <label style="display:flex;gap:.5rem;align-items:center;margin-top:1rem"><input type="checkbox" id="banner-activo"> Mostrar banner en la página</label>
+        <label for="banner-texto">Texto</label>
+        <input type="text" id="banner-texto" maxlength="100" placeholder="Ej: 💐 Día de la Madre: reservá el tuyo con tiempo">
+        <div class="ayuda" style="text-align:right"><span id="banner-n">0</span>/100</div>
+        <p class="ayuda" style="margin-top:.6rem">Ideas: "🎓 Egresados 2026: reservá y congelá el precio" · "💘 San Valentín: pedí con anticipación"</p>
+        <p class="msj" id="banner-msj"></p>
+        <button id="guardar-banner">Guardar banner</button>
       </div>
     </section>
   </div>
@@ -141,13 +155,13 @@ A.onAuthStateChanged(auth, async (user) => {
   if (!rol) { await A.signOut(auth); $("login").hidden = false; $("login-msj").textContent = "Este usuario no tiene permiso para el panel."; return; }
   $("rol").textContent = `${user.email} · ${rol === "admin" ? "Administrador" : "Cliente"}`;
   $("sesion").hidden = false; $("app").hidden = false;
-  escucharStats(); escucharGaleria();
+  escucharStats(); escucharGaleria(); cargarBanner();
 });
 
 // ---------- Pestañas ----------
 document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => {
   document.querySelectorAll("[data-tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
-  for (const t of ["stats", "fotos"]) $(`tab-${t}`).hidden = b.dataset.tab !== t;
+  for (const t of ["stats", "fotos", "banner"]) $(`tab-${t}`).hidden = b.dataset.tab !== t;
 }));
 
 // ---------- Estadísticas ----------
@@ -257,6 +271,19 @@ $("btn-importar").onclick = async () => {
   $("btn-importar").disabled = false;
 };
 
+
+// ---------- Banner ----------
+async function cargarBanner() {
+  const b = await D.get(D.ref(db, "web/config/banner")).then((s) => s.val()).catch(() => null) || {};
+  $("banner-activo").checked = !!b.activo; $("banner-texto").value = b.texto || ""; $("banner-n").textContent = $("banner-texto").value.length;
+}
+$("banner-texto").addEventListener("input", (e) => { $("banner-n").textContent = e.target.value.length; });
+$("guardar-banner").onclick = async () => {
+  const texto = $("banner-texto").value.trim(), activo = $("banner-activo").checked, m = $("banner-msj");
+  if (activo && !texto) { m.textContent = "Escribí un texto para mostrar el banner."; m.className = "msj mal"; return; }
+  try { await D.set(D.ref(db, "web/config/banner"), { activo, texto }); m.textContent = activo ? "Banner publicado ✔" : "Banner guardado (oculto) ✔"; m.className = "msj ok"; }
+  catch { m.textContent = "No se pudo guardar."; m.className = "msj mal"; }
+};
 </script>
 </body>
 </html>

@@ -54,7 +54,7 @@ const COLORES = [
   ["Azul", "#1e4fb3"], ["Verde", "#43a047"], ["Verde agua", "#7fd6c2"], ["Dorado", "#c9a24a"],
   ["Plateado", "#c0c0c0"], ["Negro", "#222222"]
 ];
-const EXTRAS = ["🦋 Mariposas", "🤍 Perlas", "👑 Corona", "🍫 Bombones", "💡 Luces", "💌 Tarjeta"];
+const EXTRAS = ["🦋 Mariposas", "🤍 Perlas", "👑 Corona", "🍫 Bombones", "💡 Luces", "🌸 Perfumadas", "💌 Tarjeta"];
 const MAX_COLORES = 3;
 
 const $ = (id) => document.getElementById(id);
@@ -85,8 +85,10 @@ EXTRAS.forEach((e) => {
 });
 
 const fecha = $("fecha");
-const minFecha = new Date(); minFecha.setDate(minFecha.getDate() + 2);
-fecha.min = minFecha.toLocaleDateString("en-CA");
+const hoyStr = new Date().toLocaleDateString("en-CA");
+const lim48 = new Date(); lim48.setDate(lim48.getDate() + 2);
+const lim48Str = lim48.toLocaleDateString("en-CA");
+fecha.min = hoyStr; // se puede elegir cualquier fecha desde hoy
 
 $("con-cinta").addEventListener("change", (e) => { $("cinta-box").hidden = !e.target.checked; actualizar(); });
 $("cinta").addEventListener("input", (e) => { $("cinta-n").textContent = e.target.value.length; });
@@ -128,6 +130,7 @@ function actualizar() {
     const s = document.createElement("span"); s.textContent = v;
     li.append(b, s); return li;
   }));
+  $("nota-fecha").hidden = !(fecha.value && fecha.value < lim48Str);
   $("error-ramo").textContent = "";
 }
 
@@ -143,15 +146,37 @@ function mensaje(d) {
 }
 
 $("enviar-ramo").addEventListener("click", (ev) => {
-  if (fecha.value && fecha.value < fecha.min) {
+  if (fecha.value && fecha.value < hoyStr) {
     ev.preventDefault();
-    $("error-ramo").textContent = "Necesitamos al menos 48 hs de anticipación. Elegí otra fecha.";
+    $("error-ramo").textContent = "Esa fecha ya pasó. Elegí otra.";
     return;
   }
   ev.currentTarget.href = linkWA(mensaje(datos()));
   contar("armador");
 });
 
+// ---------- Tamaños sugeridos ----------
+document.querySelectorAll(".tamano").forEach((b) => b.addEventListener("click", () => {
+  selCant.value = b.dataset.rosas; actualizar();
+  document.getElementById("armador").scrollIntoView({ behavior: "smooth" });
+}));
+
+// ---------- Testimonios (simulación: solo con ?demo en la URL) ----------
+if (new URLSearchParams(location.search).has("demo")) document.getElementById("testimonios").hidden = false;
+
+// ---------- Banner de fecha especial (se maneja desde el panel) ----------
+async function cargarBanner() {
+  if (!db) return;
+  const s = await dbApi.get(dbApi.ref(db, "web/config/banner")).catch(() => null);
+  const b = s && s.val();
+  if (!b || !b.activo || !b.texto) return;
+  const el = document.getElementById("banner");
+  el.textContent = b.texto + " ";
+  const a = document.createElement("a"); a.href = "#armador"; a.textContent = "Armá tu ramo →";
+  el.append(a); el.hidden = false;
+}
+
 actualizar();
 await iniciarFirebase();
 cargarGaleria();
+cargarBanner();

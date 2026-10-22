@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fff8f4">
+<link rel="canonical" href="https://javiaguilar1.github.io/reina-dabi/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://javiaguilar1.github.io/reina-dabi/">
+<meta property="og:site_name" content="Reina Dabi">
+<meta property="og:title" content="Reina Dabi · Ramos de flores eternas">
+<meta property="og:description" content="Rosas de satén hechas a mano en San Fernando. Armá tu ramo personalizado y pedilo por WhatsApp 🌹">
+<meta property="og:image" content="https://javiaguilar1.github.io/reina-dabi/img/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ramos de rosas eternas de Reina Dabi">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/logo.jpg">
+<link rel="apple-touch-icon" href="img/logo.jpg">
 <title>Reina Dabi · Ramos de flores eternas</title>
 <meta name="description" content="Ramos de rosas eternas hechos a mano en San Fernando, Buenos Aires. Personalizados para cumpleaños, quinceañeras, egresados, aniversarios y más.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,6 +149,39 @@ textarea{resize:vertical;min-height:70px}
 .resumen .btn{width:100%;justify-content:center}
 .nota{font-size:.85rem;color:var(--gris);margin-top:.7rem;text-align:center}
 .error{color:#b42318;font-weight:700;font-size:.9rem;margin-top:.5rem;text-align:center;min-height:1.2em}
+/* Banner de fecha especial */
+.banner{background:linear-gradient(90deg,var(--bordo),var(--rosa));color:#fff;text-align:center;font-weight:700;padding:.65rem 1rem;font-size:.95rem}
+.banner a{color:#fff;text-decoration:underline}
+.nota-fecha{margin-top:.45rem;font-size:.9rem;font-weight:600;color:var(--bordo);background:var(--rosa-suave);border-radius:10px;padding:.5rem .7rem}
+/* Por qué */
+.porque{display:grid;gap:1rem}
+.porque div{background:#fff;border-radius:var(--radio);padding:1.3rem;text-align:center;box-shadow:var(--sombra)}
+.porque b{display:block;font-family:"Playfair Display",serif;color:var(--bordo);font-size:1.15rem;margin:.3rem 0}
+.porque span{font-size:2rem}
+.porque p{color:var(--gris);font-size:.95rem}
+/* Tamaños */
+.tamanos{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1.4rem}
+.tamano{background:#fff;border:1.5px solid var(--rosa-suave);border-radius:var(--radio);padding:1rem .5rem;text-align:center;cursor:pointer;font:inherit;color:var(--texto)}
+.tamano:hover{border-color:var(--rosa)}
+.tamano b{display:block;font-family:"Playfair Display",serif;color:var(--bordo);font-size:1.1rem}
+.tamano small{color:var(--gris);display:block}
+.tamano em{font-style:normal;font-size:.8rem;color:var(--rosa);font-weight:700}
+/* Testimonios */
+.testis{display:grid;gap:1rem}
+.testi{background:#fff;border-radius:var(--radio);padding:1.2rem;box-shadow:var(--sombra);position:relative}
+.testi p{font-style:italic}
+.testi b{display:block;margin-top:.6rem;color:var(--bordo)}
+.estrellas{color:#e0a100;letter-spacing:2px}
+.demo{display:inline-block;background:#fff3cd;color:#7a4b00;border:1px dashed #c9a24a;border-radius:8px;padding:.3rem .7rem;font-size:.8rem;font-weight:700;margin-top:.5rem}
+/* FAQ */
+.faq{max-width:760px;margin:0 auto;display:grid;gap:.6rem}
+.faq details{background:#fff;border-radius:14px;padding:1rem 1.2rem;box-shadow:0 4px 14px rgba(158,47,95,.07)}
+.faq summary{cursor:pointer;font-weight:700;color:var(--bordo);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+.faq summary::after{content:"+";font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq summary::-webkit-details-marker{display:none}
+.faq p{margin-top:.6rem;color:var(--gris)}
+@media (min-width:760px){.porque,.testis{grid-template-columns:repeat(3,1fr)}}
 /* iPhone / Android: sin zoom al escribir, controles parejos, respeta la barra inferior */
 html{-webkit-text-size-adjust:100%}
 select,input[type=text],input[type=date],textarea{font-size:16px;min-height:46px;-webkit-appearance:none;appearance:none}
@@ -150,6 +196,7 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
 </head>
 <body>
 
+<div class="banner" id="banner" hidden></div>
 <header>
   <div class="contenedor nav">
     <a class="marca" href="#inicio"><img src="img/logo.jpg" alt="Logo Reina Dabi"><span>Reina Dabi</span></a>
@@ -185,6 +232,17 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
     </div>
   </section>
 
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>¿Por qué rosas eternas?</h2></div>
+      <div class="porque">
+        <div><span>♾️</span><b>Duran años</b><p>No se marchitan: el regalo queda como recuerdo para siempre.</p></div>
+        <div><span>💧</span><b>Sin agua ni cuidados</b><p>No necesitan riego ni florero. Solo un lugar lejos de la humedad.</p></div>
+        <div><span>✋</span><b>Hechas a mano</b><p>Cada rosa se arma una por una, en el color y diseño que elijas.</p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="ramos" style="padding-top:0">
     <div class="contenedor">
       <div class="titulo"><h2>Algunos de nuestros ramos</h2><p>Cada uno es único: elegí colores, tamaño y detalles</p></div>
@@ -198,6 +256,12 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
         <figure><img src="img/amarillo.jpg" alt="Ramo amarillo con cinta Feliz Cumple" loading="lazy"><figcaption>Cumpleaños con cinta</figcaption></figure>
         <figure><img src="img/rosa.jpg" alt="Ramo rosa con cinta personalizada y mariposa" loading="lazy"><figcaption>Rosa con mensaje</figcaption></figure>
       </div>
+      <div class="titulo" style="margin:2.5rem 0 0"><h2 style="font-size:1.5rem">¿No sabés cuántas rosas pedir?</h2><p>Tocá un tamaño y lo cargamos en el armador</p></div>
+      <div class="tamanos">
+        <button class="tamano" type="button" data-rosas="5"><b>Chico</b><small>3 a 7 rosas</small><em>Un detalle</em></button>
+        <button class="tamano" type="button" data-rosas="12"><b>Mediano</b><small>10 a 14 rosas</small><em>El más pedido</em></button>
+        <button class="tamano" type="button" data-rosas="21"><b>Grande</b><small>20 a 25 rosas</small><em>Para lucirse</em></button>
+      </div>
     </div>
   </section>
 
@@ -208,7 +272,7 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
         <div class="tarjeta"><div class="ico">🎀</div><h3>Cinta con mensaje</h3><p>"Feliz cumple", "Felices 15", un nombre o lo que quieras decir.</p></div>
         <div class="tarjeta"><div class="ico">🦋</div><h3>Mariposas</h3><p>Doradas, plateadas o tornasoladas.</p></div>
         <div class="tarjeta"><div class="ico">👑</div><h3>Coronas y perlas</h3><p>Para quinceañeras y reinas de la casa.</p></div>
-        <div class="tarjeta"><div class="ico">🌹</div><h3>Rosas perfumadas</h3><p>Elegí la cantidad y la combinación de colores.</p></div>
+        <div class="tarjeta"><div class="ico">🌹</div><h3>Rosas perfumadas</h3><p>Un aroma suave que acompaña al ramo.</p></div>
         <div class="tarjeta"><div class="ico">🍫</div><h3>Con bombones</h3><p>Ramos con chocolates en el centro.</p></div>
         <div class="tarjeta"><div class="ico">💡</div><h3>Con luces</h3><p>Un detalle que brilla en la oscuridad.</p></div>
       </div>
@@ -240,7 +304,7 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
               <div class="contador-txt"><span id="cinta-n">0</span>/40</div>
             </div></div>
           <div class="campo"><span class="etiqueta">Extras</span><div class="opciones" id="extras"></div></div>
-          <div class="campo"><label for="fecha">¿Para cuándo lo necesitás? <small>(mínimo 48 hs)</small></label><input type="date" id="fecha"></div>
+          <div class="campo"><label for="fecha">¿Para cuándo lo necesitás? <small>(ideal con 48 hs de anticipación)</small></label><input type="date" id="fecha"><p class="nota-fecha" id="nota-fecha" hidden>⏳ Para antes de 48 hs, consultanos stock disponible.</p></div>
           <div class="campo"><span class="etiqueta">Entrega</span>
             <div class="opciones">
               <label class="opcion"><input type="radio" name="entrega" value="Punto de encuentro" checked><span>📍 Punto de encuentro</span></label>
@@ -265,12 +329,37 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
     <div class="contenedor">
       <div class="titulo"><h2>¿Cómo trabajamos?</h2><p>Simple y por WhatsApp</p></div>
       <div class="pasos">
-        <div class="paso"><div><h3>Contanos qué buscás</h3><p>Elegí uno de nuestros diseños o mandanos una foto de referencia.</p></div></div>
+        <div class="paso"><div><h3>Contanos qué buscás</h3><p>Usá el armador, elegí uno de nuestros diseños o mandanos una foto de referencia.</p></div></div>
         <div class="paso"><div><h3>Te pasamos el presupuesto</h3><p>Si estás de acuerdo, ¡avanzamos!</p></div></div>
         <div class="paso"><div><h3>Reservás con seña</h3><p>Coordinado por transferencia o efectivo.</p></div></div>
-        <div class="paso"><div><h3>Te lo entregamos</h3><p>En un punto de encuentro o con envío por Uber. Con envío, el ramo se abona completo y el envío se paga al recibir.</p></div></div>
+        <div class="paso"><div><h3>Te lo entregamos</h3><p>En un punto de encuentro, retiro o envío.</p></div></div>
       </div>
       <p class="aviso">Pedidos con 48 hs de anticipación · ¡Consultanos por stock, siempre hay algo hermoso disponible! ✨</p>
+    </div>
+  </section>
+
+  <section id="testimonios" hidden style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Lo que dicen nuestras clientas</h2><span class="demo">⚠️ SIMULACIÓN · textos de ejemplo, reemplazar por testimonios reales antes de publicar</span></div>
+      <div class="testis">
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"Le regalé un ramo a mi mamá para su cumple y quedó hermoso, igual a la foto que les mandé."</p><b>— Ejemplo 1</b></div>
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"El ramo de 15 con la corona fue lo más lindo de la fiesta. Súper atentas con cada detalle."</p><b>— Ejemplo 2</b></div>
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"Lo pedí con poco tiempo y igual me consiguieron uno precioso. ¡Gracias!"</p><b>— Ejemplo 3</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Preguntas frecuentes</h2></div>
+      <div class="faq">
+        <details><summary>¿Cuánto duran las rosas eternas?</summary><p>Años. Son de satén, no se marchitan ni pierden el color si las cuidás de la humedad y del sol directo.</p></details>
+        <details><summary>¿Cómo se cuidan?</summary><p>No necesitan agua. Mantenelas en un lugar seco y, si juntan polvo, pasales un plumero suave o un secador de pelo con aire frío.</p></details>
+        <details><summary>¿Con cuánta anticipación tengo que pedir?</summary><p>Lo ideal es 48 hs antes. Si lo necesitás antes, consultanos: siempre hay algo hermoso disponible.</p></details>
+        <details><summary>¿Hacen envíos?</summary><p>Sí. Podés elegir punto de encuentro, retiro o envío. Te pasamos los detalles por WhatsApp.</p></details>
+        <details><summary>¿Puedo pedir un diseño de una foto?</summary><p>¡Claro! Mandanos la foto de referencia por WhatsApp y lo armamos a tu gusto.</p></details>
+        <details><summary>¿Cómo se reserva?</summary><p>Con una seña, coordinada por transferencia o efectivo.</p></details>
+      </div>
     </div>
   </section>
 
