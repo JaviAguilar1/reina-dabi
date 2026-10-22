@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reina Dabi · Ramos de flores eternas</title>
+<meta name="description" content="Ramos de rosas eternas hechos a mano en San Fernando, Buenos Aires. Personalizados para cumpleaños, quinceañeras, egresados, aniversarios y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rosa:#e2708c; --rosa-suave:#fbe3ea; --bordo:#9e2f5f; --crema:#fff8f4;
+  --dorado:#c49a45; --texto:#3b2630; --gris:#7a6670; --blanco:#fff;
+  --sombra:0 10px 30px rgba(158,47,95,.12); --radio:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Nunito",system-ui,sans-serif;background:var(--crema);color:var(--texto);line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit}
+.contenedor{width:min(1100px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:"Playfair Display",serif;line-height:1.2;color:var(--bordo)}
+.script{font-family:"Great Vibes",cursive;color:var(--rosa);font-weight:400}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-wa{background:#25d366;color:#fff;box-shadow:0 8px 20px rgba(37,211,102,.35)}
+.btn-borde{border:2px solid var(--bordo);color:var(--bordo)}
+.btn svg{width:22px;height:22px;flex:none}
+
+/* Encabezado */
+header{position:sticky;top:0;z-index:20;background:rgba(255,248,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rosa-suave)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0}
+.marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.marca img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid var(--rosa-suave)}
+.marca span{font-family:"Playfair Display",serif;font-weight:700;color:var(--bordo);font-size:1.15rem}
+.nav .btn{padding:.55rem 1rem;font-size:.9rem}
+
+/* Hero */
+.hero{padding:3rem 0 2.5rem;background:radial-gradient(circle at 85% 10%,var(--rosa-suave),transparent 55%)}
+.hero-grid{display:grid;gap:2rem;align-items:center}
+.hero-logo{width:180px;margin-bottom:.5rem;border-radius:16px}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero .script{font-size:clamp(1.8rem,5vw,2.5rem);display:block;margin:.3rem 0 1rem}
+.hero p{color:var(--gris);font-size:1.1rem;max-width:34rem}
+.acciones{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+.hero-foto{border-radius:28px;overflow:hidden;box-shadow:var(--sombra);aspect-ratio:4/5;max-width:440px;justify-self:center;border:6px solid #fff}
+.hero-foto img{width:100%;height:100%;object-fit:cover}
+
+/* Secciones */
+section{padding:3.5rem 0}
+.titulo{text-align:center;margin-bottom:2rem}
+.titulo h2{font-size:clamp(1.6rem,4.5vw,2.3rem)}
+.titulo p{color:var(--gris);margin-top:.4rem}
+
+/* Ocasiones */
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
+.chip{background:#fff;border:1px solid var(--rosa-suave);padding:.6rem 1.1rem;border-radius:999px;font-weight:600;color:var(--bordo);box-shadow:0 4px 12px rgba(158,47,95,.06)}
+
+/* Galería */
+.galeria{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+.galeria figure{position:relative;border-radius:var(--radio);overflow:hidden;background:#fff;box-shadow:var(--sombra);aspect-ratio:4/5}
+.galeria img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.galeria figure:hover img{transform:scale(1.05)}
+.galeria figcaption{position:absolute;inset:auto 0 0 0;padding:1.6rem .8rem .7rem;font-weight:700;font-size:.9rem;color:#fff;background:linear-gradient(transparent,rgba(60,20,40,.75))}
+
+/* Personalización */
+.extras{background:#fff}
+.tarjetas{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.tarjeta{background:var(--crema);border-radius:var(--radio);padding:1.3rem 1rem;text-align:center;border:1px solid var(--rosa-suave)}
+.tarjeta .ico{font-size:1.8rem}
+.tarjeta h3{font-size:1.05rem;margin:.4rem 0 .2rem}
+.tarjeta p{font-size:.92rem;color:var(--gris)}
+
+/* Pasos */
+.pasos{display:grid;gap:1rem;counter-reset:paso}
+.paso{display:flex;gap:1rem;background:#fff;border-radius:var(--radio);padding:1.2rem;box-shadow:var(--sombra)}
+.paso::before{counter-increment:paso;content:counter(paso);flex:none;width:42px;height:42px;border-radius:50%;background:var(--rosa);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem}
+.paso h3{font-size:1.05rem}
+.paso p{color:var(--gris);font-size:.95rem}
+.aviso{margin-top:1.4rem;text-align:center;background:var(--rosa-suave);color:var(--bordo);border-radius:var(--radio);padding:1rem;font-weight:600}
+
+/* Llamado final */
+.cta{background:linear-gradient(135deg,var(--bordo),var(--rosa));color:#fff;text-align:center;border-radius:28px;padding:2.5rem 1.2rem}
+.cta h2{color:#fff;font-size:clamp(1.6rem,4.5vw,2.2rem)}
+.cta .script{color:#fff;font-size:2rem;display:block}
+.cta p{opacity:.92;margin:.6rem auto 1.5rem;max-width:32rem}
+.cta .acciones{justify-content:center}
+.cta .btn-borde{border-color:#fff;color:#fff}
+
+footer{padding:2.5rem 0 6rem;text-align:center;color:var(--gris);font-size:.92rem}
+footer .marca{justify-content:center;margin-bottom:.6rem}
+
+/* WhatsApp flotante */
+.wa-flotante{position:fixed;right:16px;bottom:16px;z-index:30;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 25px rgba(0,0,0,.25)}
+.wa-flotante svg{width:32px;height:32px}
+
+@media (min-width:760px){
+  .hero-grid{grid-template-columns:1.1fr .9fr}
+  .galeria{grid-template-columns:repeat(4,1fr)}
+  .tarjetas{grid-template-columns:repeat(3,1fr)}
+  .pasos{grid-template-columns:repeat(2,1fr)}
+}
+
+/* Armador de ramo */
+.armador{background:linear-gradient(180deg,var(--crema),var(--rosa-suave))}
+.arm-grid{display:grid;gap:1.2rem;align-items:start}
+.panel{background:#fff;border-radius:22px;box-shadow:var(--sombra);padding:1.3rem}
+.campo{margin-bottom:1.2rem}
+.campo>label,.campo>.etiqueta{display:block;font-weight:700;color:var(--bordo);margin-bottom:.45rem}
+.campo small{color:var(--gris);font-weight:400}
+select,input[type=text],input[type=date],textarea{width:100%;font:inherit;padding:.7rem .85rem;border:1.5px solid var(--rosa-suave);border-radius:12px;background:var(--crema);color:var(--texto)}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--rosa);border-color:transparent}
+textarea{resize:vertical;min-height:70px}
+.colores{display:flex;flex-wrap:wrap;gap:.5rem}
+.color{display:flex;align-items:center;gap:.4rem;padding:.4rem .75rem .4rem .45rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--texto)}
+.color i{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex:none}
+.color[aria-pressed=true]{border-color:var(--bordo);background:var(--rosa-suave);color:var(--bordo)}
+.color:disabled{opacity:.4;cursor:not-allowed}
+.opciones{display:flex;flex-wrap:wrap;gap:.5rem}
+.opcion{position:relative}
+.opcion input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opcion span{display:block;padding:.45rem .85rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;font-weight:600;font-size:.9rem}
+.opcion input:checked+span{border-color:var(--bordo);background:var(--rosa-suave);color:var(--bordo)}
+.opcion input:focus-visible+span{outline:2px solid var(--rosa)}
+.contador-txt{text-align:right;font-size:.8rem;color:var(--gris)}
+.resumen{position:sticky;top:80px}
+.resumen h3{margin-bottom:.8rem}
+.resumen ul{list-style:none;display:grid;gap:.45rem;margin-bottom:1.2rem}
+.resumen li{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px dashed var(--rosa-suave);padding-bottom:.4rem;font-size:.95rem}
+.resumen li b{color:var(--bordo)}
+.resumen li span{text-align:right}
+.resumen .btn{width:100%;justify-content:center}
+.nota{font-size:.85rem;color:var(--gris);margin-top:.7rem;text-align:center}
+.error{color:#b42318;font-weight:700;font-size:.9rem;margin-top:.5rem;text-align:center;min-height:1.2em}
+@media (min-width:860px){.arm-grid{grid-template-columns:1.25fr .75fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="contenedor nav">
+    <a class="marca" href="#inicio"><img src="img/logo.jpg" alt="Logo Reina Dabi"><span>Reina Dabi</span></a>
+    <a class="btn btn-wa" data-wa="encabezado" href="#" target="_blank" rel="noopener">Pedí tu ramo</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="contenedor hero-grid">
+      <div>
+        <img class="hero-logo" src="img/logo.jpg" alt="Reina Dabi">
+        <h1>Ramos de flores eternas</h1>
+        <span class="script">Detalles que duran para siempre</span>
+        <p>Rosas de satén hechas a mano, una por una, en San Fernando. Personalizamos cada ramo con cintas con mensaje, mariposas, perlas y coronas.</p>
+        <div class="acciones">
+          <a class="btn btn-wa" data-wa="portada" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> Pedí tu ramo por WhatsApp</a>
+          <a class="btn btn-borde" href="#armador">Armá tu ramo</a>
+        </div>
+      </div>
+      <div class="hero-foto"><img src="img/corona.jpg" alt="Ramo de rosas eternas verde y marfil con corona y mariposas"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenedor">
+      <div class="titulo"><h2>Un ramo para cada momento</h2><p>Hacemos ramos a pedido para</p></div>
+      <div class="chips">
+        <span class="chip">🎓 Egresados</span><span class="chip">🎂 Cumpleaños</span><span class="chip">💍 Casamientos</span>
+        <span class="chip">👑 Quinceañeras</span><span class="chip">💞 Aniversarios</span><span class="chip">💌 Propuestas</span>
+        <span class="chip">🌸 Días especiales</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="ramos" style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Algunos de nuestros ramos</h2><p>Cada uno es único: elegí colores, tamaño y detalles</p></div>
+      <div class="galeria" id="galeria">
+        <figure><img src="img/lila.jpg" alt="Ramo lila y dorado con mariposas" loading="lazy"><figcaption>Lila y dorado</figcaption></figure>
+        <figure><img src="img/rojas.jpg" alt="Ramo de rosas rojas con tallo" loading="lazy"><figcaption>Rojas con tallo</figcaption></figure>
+        <figure><img src="img/perfumadas.jpg" alt="Ramo de 21 rosas perfumadas con corona" loading="lazy"><figcaption>21 rosas perfumadas + corona</figcaption></figure>
+        <figure><img src="img/verde_blanco.jpg" alt="Ramo verde y blanco con mariposa dorada" loading="lazy"><figcaption>Verde y blanco</figcaption></figure>
+        <figure><img src="img/azul.jpg" alt="Ramo de rosas azules con bombones" loading="lazy"><figcaption>Azul con bombones</figcaption></figure>
+        <figure><img src="img/mariposa_rosa.jpg" alt="Ramo rosa claro con mariposa" loading="lazy"><figcaption>Rosa con mariposa</figcaption></figure>
+        <figure><img src="img/amarillo.jpg" alt="Ramo amarillo con cinta Feliz Cumple" loading="lazy"><figcaption>Cumpleaños con cinta</figcaption></figure>
+        <figure><img src="img/rosa.jpg" alt="Ramo rosa con cinta personalizada y mariposa" loading="lazy"><figcaption>Rosa con mensaje</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="extras">
+    <div class="contenedor">
+      <div class="titulo"><h2>Hacelo tuyo</h2><p>Sumale los detalles que quieras</p></div>
+      <div class="tarjetas">
+        <div class="tarjeta"><div class="ico">🎀</div><h3>Cinta con mensaje</h3><p>"Feliz cumple", "Felices 15", un nombre o lo que quieras decir.</p></div>
+        <div class="tarjeta"><div class="ico">🦋</div><h3>Mariposas</h3><p>Doradas, plateadas o tornasoladas.</p></div>
+        <div class="tarjeta"><div class="ico">👑</div><h3>Coronas y perlas</h3><p>Para quinceañeras y reinas de la casa.</p></div>
+        <div class="tarjeta"><div class="ico">🌹</div><h3>Rosas perfumadas</h3><p>Elegí la cantidad y la combinación de colores.</p></div>
+        <div class="tarjeta"><div class="ico">🍫</div><h3>Con bombones</h3><p>Ramos con chocolates en el centro.</p></div>
+        <div class="tarjeta"><div class="ico">💡</div><h3>Con luces</h3><p>Un detalle que brilla en la oscuridad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="armador" id="armador">
+    <div class="contenedor">
+      <div class="titulo"><h2>Armá tu ramo</h2><p>Elegí cómo lo querés y te pasamos el presupuesto por WhatsApp</p></div>
+      <div class="arm-grid">
+        <form class="panel" id="form-ramo" autocomplete="off">
+          <div class="campo"><label for="ocasion">¿Para qué ocasión?</label>
+            <select id="ocasion">
+              <option>Cumpleaños</option><option>Quinceañera</option><option>Egresados</option><option>Aniversario</option>
+              <option>Casamiento</option><option>Propuesta</option><option>San Valentín</option><option>Día de la Madre</option>
+              <option>Día de la Primavera</option><option>Porque sí</option><option>Otra</option>
+            </select></div>
+          <div class="campo"><label for="cantidad">Cantidad de rosas</label><select id="cantidad"></select></div>
+          <div class="campo"><span class="etiqueta">Colores de las rosas <small>(hasta 3)</small></span><div class="colores" id="colores"></div></div>
+          <div class="campo"><label for="envoltorio">Color del envoltorio</label>
+            <select id="envoltorio">
+              <option>A elección de Reina Dabi</option><option>Blanco</option><option>Negro</option><option>Rosa</option>
+              <option>Lila</option><option>Celeste</option><option>Dorado</option><option>Papel diario</option>
+            </select></div>
+          <div class="campo"><span class="etiqueta">Cinta con mensaje</span>
+            <div class="opciones"><label class="opcion"><input type="checkbox" id="con-cinta"><span>🎀 Quiero cinta con mensaje</span></label></div>
+            <div id="cinta-box" hidden style="margin-top:.6rem">
+              <input type="text" id="cinta" maxlength="40" placeholder="Ej: Feliz cumple, ma ❤">
+              <div class="contador-txt"><span id="cinta-n">0</span>/40</div>
+            </div></div>
+          <div class="campo"><span class="etiqueta">Extras</span><div class="opciones" id="extras"></div></div>
+          <div class="campo"><label for="fecha">¿Para cuándo lo necesitás? <small>(mínimo 48 hs)</small></label><input type="date" id="fecha"></div>
+          <div class="campo"><span class="etiqueta">Entrega</span>
+            <div class="opciones">
+              <label class="opcion"><input type="radio" name="entrega" value="Punto de encuentro" checked><span>📍 Punto de encuentro</span></label>
+              <label class="opcion"><input type="radio" name="entrega" value="Envío por Uber"><span>🚗 Envío por Uber</span></label>
+            </div></div>
+          <div class="campo"><label for="nombre">Tu nombre <small>(opcional)</small></label><input type="text" id="nombre" maxlength="40"></div>
+          <div class="campo" style="margin-bottom:0"><label for="comentarios">Comentarios <small>(opcional)</small></label><textarea id="comentarios" maxlength="300" placeholder="Ej: tengo una foto de referencia"></textarea></div>
+        </form>
+        <aside class="panel resumen" aria-live="polite">
+          <h3>Tu ramo</h3>
+          <ul id="resumen"></ul>
+          <a class="btn btn-wa" id="enviar-ramo" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> Enviar pedido por WhatsApp</a>
+          <p class="error" id="error-ramo"></p>
+          <p class="nota">Te respondemos con el presupuesto. Nada se cobra hasta que confirmes.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenedor">
+      <div class="titulo"><h2>¿Cómo trabajamos?</h2><p>Simple y por WhatsApp</p></div>
+      <div class="pasos">
+        <div class="paso"><div><h3>Contanos qué buscás</h3><p>Elegí uno de nuestros diseños o mandanos una foto de referencia.</p></div></div>
+        <div class="paso"><div><h3>Te pasamos el presupuesto</h3><p>Si estás de acuerdo, ¡avanzamos!</p></div></div>
+        <div class="paso"><div><h3>Reservás con seña</h3><p>Coordinado por transferencia o efectivo.</p></div></div>
+        <div class="paso"><div><h3>Te lo entregamos</h3><p>En un punto de encuentro o con envío por Uber. Con envío, el ramo se abona completo y el envío se paga al recibir.</p></div></div>
+      </div>
+      <p class="aviso">Pedidos con 48 hs de anticipación · ¡Consultanos por stock, siempre hay algo hermoso disponible! ✨</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="cta">
+        <span class="script">Regalá algo que dure</span>
+        <h2>Fechas especiales: reservá con tiempo</h2>
+        <p>Para cumpleaños, egresados y fechas de mucha demanda, reservá tu ramo con anticipación y congelá el precio.</p>
+        <div class="acciones">
+          <a class="btn btn-wa" data-wa="cierre" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> Escribinos</a>
+          <a class="btn btn-borde" href="https://www.instagram.com/lareina.dabi/" target="_blank" rel="noopener">@lareina.dabi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <a class="marca" href="#inicio"><img src="img/logo.jpg" alt=""><span>Reina Dabi</span></a>
+    <p>Ramos de flores eternas · San Fernando, Buenos Aires · Hacemos envíos</p>
+    <p>WhatsApp <a data-wa="pie" href="#" target="_blank" rel="noopener">11 6650-4492</a> · Instagram <a href="https://www.instagram.com/lareina.dabi/" target="_blank" rel="noopener">@lareina.dabi</a></p>
+  </div>
+</footer>
+
+<a class="wa-flotante" data-wa="flotante" href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg></a>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+REINA DABI - SITIO WEB
+======================
+
+ARCHIVOS
+- index.html ............ pagina publica (con armador de ramo)
+- app.js ................ armador, contador de clics y galeria
+- admin.html ............ panel privado (estadisticas + galeria)
+- firebase-config.js .... datos del proyecto Firebase y WhatsApp del negocio
+- reglas-database.json .. reglas de seguridad de la base
+- img/ .................. fotos iniciales
+
+SIN FIREBASE la pagina funciona igual (armador + WhatsApp + galeria fija).
+CON FIREBASE se activan el contador de clics y la galeria editable.
+
+NOTA REINA DABI: usa el proyecto existente "Rosas Eternas" (rosas-eternas-af9ab).
+Todo lo de la web vive bajo el nodo "web/"; "pedidos" queda igual que antes.
+Los roles van en web/roles/<UID> (no en roles/).
+
+PUESTA EN MARCHA (una vez por cliente)
+1. console.firebase.google.com > Crear proyecto (ej: reina-dabi-web). Sin Analytics.
+2. Compilacion > Realtime Database > Crear base de datos > ubicacion us-central1 > modo bloqueado.
+3. Pestaña "Reglas": pegar el contenido de reglas-database.json > Publicar.
+4. Compilacion > Authentication > Comenzar > Correo electronico/contraseña > Habilitar.
+5. Authentication > Usuarios > Agregar usuario: uno para vos y uno para la dueña.
+   Copiar el "UID de usuario" de cada uno.
+6. Realtime Database > Datos > agregar a mano:
+     roles
+       <UID tuyo>  : "admin"
+       <UID de ella>: "cliente"
+7. Configuracion del proyecto (engranaje) > Tus apps > icono </> (Web) > registrar.
+   Copiar los datos de firebaseConfig en firebase-config.js.
+8. Subir la carpeta a GitHub Pages / Netlify.
+9. Entrar a /admin.html con tu usuario > Galeria > "Cargar las fotos iniciales".
+
+ROLES
+- admin: vos (mantenimiento). cliente: la dueña.
+  Los dos ven estadisticas y editan la galeria. Los roles solo se cambian
+  desde la consola de Firebase, no desde la pagina.
+
+CONTADOR DE CLICS
+- Se guarda en stats/clics/AAAA-MM-DD/<boton>. Solo lo leen usuarios con rol.
+- Las reglas solo permiten sumar de a 1: nadie puede borrarlo ni inflarlo de golpe.
+
+PLAN GRATUITO (Spark)
+- Realtime Database: 1 GB guardado, 10 GB/mes de descarga. Cada foto pesa ~150-450 KB:
+  alcanza de sobra para una galeria de 20-40 fotos.

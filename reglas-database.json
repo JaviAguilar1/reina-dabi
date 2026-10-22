@@ -1,0 +1,44 @@
+{
+  "rules": {
+    "pedidos": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "web": {
+      "galeria": {
+        ".read": true,
+        ".write": "auth != null && root.child('web/roles').child(auth.uid).exists()",
+        "$id": {
+          ".validate": "newData.hasChildren(['src', 'orden'])",
+          "src": { ".validate": "newData.isString() && newData.val().beginsWith('data:image/') && newData.val().length < 600000" },
+          "texto": { ".validate": "newData.isString() && newData.val().length <= 60" },
+          "orden": { ".validate": "newData.isNumber()" },
+          "creado": { ".validate": "newData.isNumber()" },
+          "$otro": { ".validate": false }
+        }
+      },
+      "config": {
+        ".read": true,
+        ".write": "auth != null && root.child('web/roles').child(auth.uid).exists()"
+      },
+      "stats": {
+        ".read": "auth != null && root.child('web/roles').child(auth.uid).exists()",
+        "clics": {
+          "$dia": {
+            ".validate": "$dia.matches(/^20[0-9][0-9]-[0-1][0-9]-[0-3][0-9]$/)",
+            "$boton": {
+              ".write": true,
+              ".validate": "$boton.matches(/^(encabezado|portada|armador|cierre|pie|flotante)$/) && newData.isNumber() && ((!data.exists() && newData.val() === 1) || (data.exists() && newData.val() === data.val() + 1))"
+            }
+          }
+        }
+      },
+      "roles": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": false
+        }
+      }
+    }
+  }
+}
