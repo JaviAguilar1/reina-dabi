@@ -88,7 +88,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         <table><thead><tr><th>Botón</th><th class="n">Clics</th></tr></thead><tbody id="t-botones"></tbody></table>
       </div>
       <div class="card">
-        <h3 style="color:var(--bordo)">Últimos 30 días</h3>
+        <h3 style="color:var(--bordo)">Últimos 7 días</h3>
         <div class="barras" id="barras"></div>
       </div>
     </section>
@@ -167,7 +167,7 @@ function escucharStats() {
     $("k-hoy").textContent = suma(datos[hoyS]); $("k-7").textContent = k7; $("k-mes").textContent = kMes; $("k-total").textContent = total;
     const filas = Object.entries(porBoton).sort((a, b) => b[1] - a[1]);
     $("t-botones").innerHTML = filas.length ? filas.map(([b, n]) => `<tr><td>${NOMBRES[b] || b}</td><td class="n">${n}</td></tr>`).join("") : `<tr><td colspan="2" class="ayuda">Todavía no hay clics este mes.</td></tr>`;
-    const dias = [...Array(30)].map((_, i) => { const d = new Date(hoy); d.setDate(hoy.getDate() - 29 + i); return dia(d); });
+    const dias = [...Array(7)].map((_, i) => { const d = new Date(hoy); d.setDate(hoy.getDate() - 6 + i); return dia(d); });
     const max = Math.max(1, ...dias.map((d) => suma(datos[d])));
     $("barras").innerHTML = dias.reverse().map((d) => { const n = suma(datos[d]); const [, m, dd] = d.split("-");
       return `<div class="barra"><span>${dd}/${m}</span><div style="width:${(n / max) * 100}%"></div><em>${n}</em></div>`; }).join("");
