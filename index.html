@@ -141,9 +141,28 @@ textarea{resize:vertical;min-height:70px}
 .opcion input:focus-visible+span{outline:2px solid var(--rosa)}
 .contador-txt{text-align:right;font-size:.8rem;color:var(--gris)}
 .resumen{position:static}
-.vista-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.7rem}
-.vista-tabs button{font:inherit;font-weight:700;padding:.5rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;color:var(--bordo);cursor:pointer}
-.vista-tabs button[aria-pressed=true]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
+.vista-marco{position:relative}
+.vista-grande{position:absolute;right:.6rem;bottom:.6rem;font:inherit;font-size:.82rem;font-weight:700;padding:.45rem .8rem;border-radius:999px;border:0;background:rgba(74,16,36,.85);color:#fff;cursor:pointer;backdrop-filter:blur(6px)}
+html.v3d-abierto,html.v3d-abierto body{overflow:hidden}
+.v3d{position:fixed;inset:0;z-index:1000;background:radial-gradient(ellipse at 50% 42%,#4a1426 0%,#1c0710 55%,#070204 100%);color:#fff;font-family:Nunito,system-ui,sans-serif}
+.v3d[hidden]{display:none}
+.v3d-lienzo{position:absolute;inset:0}
+.v3d-lienzo canvas{display:block;width:100%;height:100%}
+.v3d-top{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:18px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
+.v3d-tit{font-family:"Great Vibes",cursive;font-size:2.4rem;line-height:1;color:#ffd7e3}
+.v3d-sub{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#e7b25a;margin-top:.3rem}
+.v3d-x,.v3d-info-x{pointer-events:auto;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:1rem;cursor:pointer}
+.v3d-info{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));width:min(340px,calc(100% - 32px));background:rgba(20,6,12,.78);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:14px 16px;animation:v3dIn .3s ease}
+.v3d-info[hidden]{display:none}
+.v3d-info h3{margin:0 40px .35rem 0;font-family:"Playfair Display",serif;font-size:1.2rem;color:#fff}
+.v3d-info .v3d-info-x{position:absolute;top:10px;right:10px;width:30px;height:30px}
+.v3d-chip{display:inline-block;font-size:.7rem;padding:.15rem .6rem;border-radius:999px;background:rgba(231,178,90,.2);color:#f3cf8a}
+.v3d-info p{margin:.55rem 0 0;font-size:.9rem;color:#f1dfe5;font-style:italic}
+@keyframes v3dIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+.v3d-abajo{position:absolute;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:.55rem;padding:0 16px}
+.v3d-barra{display:flex;gap:.35rem;background:rgba(20,6,12,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:5px}
+.v3d-barra button{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.07);color:#fff;font-size:1.05rem;cursor:pointer}
+.v3d-ayuda{font-size:.68rem;color:rgba(255,255,255,.55);text-align:center}
 .vista{aspect-ratio:1/1;width:100%;border-radius:18px;background:radial-gradient(circle at 50% 40%,#fff,var(--rosa-suave));overflow:hidden;display:grid;place-items:center}
 .vista svg,.vista canvas{width:100%;height:100%;display:block}
 .vista-cargando{color:var(--gris);font-weight:600}
@@ -322,11 +341,10 @@ footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
           <div class="campo" style="margin-bottom:0"><label for="comentarios">Comentarios <small>(opcional)</small></label><textarea id="comentarios" maxlength="300" placeholder="Ej: tengo una foto de referencia"></textarea></div>
         </form>
         <aside class="panel resumen">
-          <div class="vista-tabs" role="group" aria-label="Tipo de vista previa">
-            <button type="button" data-vista="2d" aria-pressed="true">Vista 2D</button>
-            <button type="button" data-vista="3d" aria-pressed="false">Vista 3D</button>
+          <div class="vista-marco">
+            <div class="vista" id="vista"></div>
+            <button type="button" class="vista-grande" id="vista-grande" hidden>⛶ Ver en grande</button>
           </div>
-          <div class="vista" id="vista"></div>
           <p class="vista-aviso" id="vista-aviso">Vista ilustrativa · el ramo final es artesanal</p>
           <h3>Tu ramo</h3>
           <ul id="resumen" aria-live="polite"></ul>

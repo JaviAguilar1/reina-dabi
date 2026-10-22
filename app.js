@@ -136,6 +136,7 @@ function actualizar() {
   actualizarVistaPrevia({
     cantidad: +d.cantidad,
     colores: elegidos.map((c) => hex[c]),
+    nombres: [...elegidos],
     envoltorio: d.envoltorio,
     extras: [...contExtras.querySelectorAll("input:checked")].map((i) => i.value),
     cinta: $("con-cinta").checked ? $("cinta").value.trim() : ""
