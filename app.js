@@ -180,10 +180,27 @@ async function cargarBanner() {
   const s = await dbApi.get(dbApi.ref(db, "web/config/banner")).catch(() => null);
   const b = s && s.val();
   if (!b || !b.activo || !b.texto) return;
-  const el = document.getElementById("banner");
-  el.textContent = b.texto + " ";
-  const a = document.createElement("a"); a.href = "#armador"; a.textContent = "Armá tu ramo →";
-  el.append(a); el.hidden = false;
+  pintarBanner(b.texto);
+  let tB = 0; window.addEventListener("resize", () => { clearTimeout(tB); tB = setTimeout(() => pintarBanner(b.texto), 250); });
+}
+// Banner que pasa de derecha a izquierda: dos mitades iguales que se desplazan en bucle sin cortes
+function pintarBanner(texto) {
+  const el = document.getElementById("banner"), pista = document.createElement("div");
+  pista.className = "banner-pista";
+  const item = (oculto) => {
+    const s = document.createElement("span"); s.className = "banner-item";
+    if (oculto) s.setAttribute("aria-hidden", "true");
+    s.append("✨ " + texto + " ");
+    const a = document.createElement("a"); a.href = "#armador"; a.textContent = "Armá tu ramo →";
+    if (oculto) a.tabIndex = -1;
+    s.append(a); return s;
+  };
+  el.replaceChildren(pista); el.hidden = false;
+  const primero = item(false); pista.append(primero);
+  const w = primero.getBoundingClientRect().width || 320, porMitad = Math.max(1, Math.ceil(window.innerWidth / w));
+  for (let i = 1; i < porMitad; i++) pista.append(item(true));
+  for (let i = 0; i < porMitad; i++) pista.append(item(true));
+  el.style.setProperty("--dur", Math.max(10, Math.round((w * porMitad) / 70)) + "s");
 }
 
 iniciarVistaPrevia();
