@@ -55,7 +55,7 @@ const COLORES = [
   ["Azul", "#1e4fb3"], ["Verde", "#43a047"], ["Verde agua", "#7fd6c2"], ["Dorado", "#c9a24a"],
   ["Plateado", "#c0c0c0"], ["Negro", "#222222"]
 ];
-const EXTRAS = ["🦋 Mariposas", "🤍 Perlas", "👑 Corona", "🍫 Bombones", "💡 Luces", "🌸 Perfumadas", "💌 Tarjeta"];
+const EXTRAS = ["🦋 Mariposas", "🎀 Moño", "🤍 Perlas", "👑 Corona", "🍫 Bombones", "💡 Luces", "🌸 Perfumadas", "💌 Tarjeta"];
 const MAX_COLORES = 3;
 
 const $ = (id) => document.getElementById(id);

@@ -248,8 +248,8 @@ function crearMotor(T, cont) {
     extrasEncima(arriba, cfg, rosas, Rb, focos);
     if (ex("Moño")) {
       const c = info(new T.Group(), INFO["Moño"]), mat = new T.MeshPhysicalMaterial({ color: lin(MONOS[cfg.mono || "Dorado"]), roughness: 0.3, clearcoat: 0.6, side: T.DoubleSide });
-      const yM = -2.2, rM = radioEn(yM); const lazo = new T.Mesh(new T.TorusGeometry(rM * 1.02, 0.06, 8, 48), mat); lazo.rotation.x = Math.PI / 2; lazo.scale.z = 2.2; lazo.position.y = yM; c.add(lazo);
-      const nudo = new T.Group(); nudo.position.set(0, yM, rM + 0.06); c.add(nudo);
+      const yM = -2.2, rM = radioEn(yM); const lazo = new T.Mesh(new T.TorusGeometry(rM * 1.03, 0.09, 8, 48), mat); lazo.rotation.x = Math.PI / 2; lazo.scale.z = 2.2; lazo.position.y = yM; c.add(lazo);
+      const nudo = new T.Group(); nudo.position.set(0, yM, rM + 0.1); nudo.scale.setScalar(1.7); c.add(nudo);
       [-1, 1].forEach((l) => { const o = new T.Mesh(new T.TorusGeometry(0.28, 0.07, 10, 32), mat); o.scale.set(1.1, 0.62, 0.45); o.position.set(l * 0.3, 0.04, 0); o.rotation.z = l * 0.25; nudo.add(o); const cola = new T.Mesh(new T.BoxGeometry(0.14, 0.55, 0.02), mat); cola.position.set(l * 0.12, -0.32, 0.02); cola.rotation.z = l * 0.35; nudo.add(cola); });
       nudo.add(new T.Mesh(new T.SphereGeometry(0.09, 16, 12), mat)); arriba.add(sombra(c));
     }
@@ -275,7 +275,8 @@ function crearMotor(T, cont) {
   }
 
   // ================= Cámara y controles (arrastrar en horizontal gira; la página sigue scrolleando en vertical)
-  const ctl = { th: 0.35, ph: 0.92, dist: 14, base: 14, vth: 0, objetivo: new T.Vector3(), quieto: 0 };
+  const ARRIBA = 0.82, COSTADO = 1.3;
+  const ctl = { th: 0.35, ph: 1.0, meta: 1.0, dist: 14, base: 14, vth: 0, objetivo: new T.Vector3(), quieto: 0 };
   const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function medir() { const w = cont.clientWidth || 300, h = cont.clientHeight || 300; ren.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); }
   function encuadrar() {
@@ -289,7 +290,7 @@ function crearMotor(T, cont) {
   lz.addEventListener("pointermove", (e) => {
     if (!toque) return; const dx = e.clientX - toque.px, dy = e.clientY - toque.py; toque.px = e.clientX; toque.py = e.clientY;
     if (Math.abs(e.clientX - toque.x) + Math.abs(e.clientY - toque.y) > 6) toque.movio = true;
-    ctl.vth = -dx * 0.007; if (e.pointerType === "mouse") ctl.ph = Math.max(0.35, Math.min(1.4, ctl.ph - dy * 0.004)); ctl.quieto = 4;
+    ctl.vth = -dx * 0.007; if (e.pointerType === "mouse") ctl.meta = ctl.ph = Math.max(0.35, Math.min(1.45, ctl.ph - dy * 0.004)); ctl.quieto = 4;
   });
   const soltar = (e) => { if (toque && !toque.movio && performance.now() - toque.t < 350 && e.type === "pointerup") elegir(e); toque = null; };
   lz.addEventListener("pointerup", soltar); lz.addEventListener("pointercancel", soltar); lz.addEventListener("pointerleave", () => { toque = null; });
@@ -306,13 +307,18 @@ function crearMotor(T, cont) {
   const zoom = document.createElement("div"); zoom.className = "vista-ctrl";
   [["−", "Alejar", 1.15], ["+", "Acercar", 0.87], ["↺", "Volver a centrar", 0]].forEach(([s, a, k]) => {
     const b = document.createElement("button"); b.type = "button"; b.textContent = s; b.setAttribute("aria-label", a);
-    b.addEventListener("click", () => { if (k) ctl.dist = Math.max(ctl.base * 0.4, Math.min(ctl.base * 1.6, ctl.dist * k)); else { ctl.dist = ctl.base; ctl.th = 0.35; ctl.ph = 0.92; } ctl.quieto = 4; });
+    b.addEventListener("click", () => { if (k) ctl.dist = Math.max(ctl.base * 0.4, Math.min(ctl.base * 1.6, ctl.dist * k)); else { ctl.dist = ctl.base; ctl.th = 0.35; ctl.meta = 1.0; } ctl.quieto = 4; });
     zoom.append(b);
   });
   cont.append(zoom);
+  // Ver de costado / de arriba: en el celular el arrastre vertical queda para mover la página
+  const angulo = document.createElement("button"); angulo.type = "button"; angulo.className = "vista-angulo";
+  const rotular = () => { angulo.textContent = ctl.meta > 1.15 ? "Ver de arriba" : "Ver de costado"; };
+  angulo.addEventListener("click", () => { const costado = ctl.meta <= 1.15; ctl.meta = costado ? COSTADO : ARRIBA; ctl.dist = ctl.base * (costado ? 0.82 : 1); ctl.quieto = 2; rotular(); });
+  rotular(); cont.append(angulo);
 
   // ================= Armar el ramo con lo elegido en el formulario
-  const EXTRAS_3D = ["Mariposas", "Perlas", "Corona", "Bombones", "Luces"];
+  const EXTRAS_3D = ["Mariposas", "Moño", "Perlas", "Corona", "Bombones", "Luces"];
   let focos = [], nAnterior = 0;
   function limpiar() { mundo.children.slice().forEach((c) => { mundo.remove(c); c.traverse((o) => { if (o.geometry && o.geometry !== geoRosa) o.geometry.dispose(); }); }); tarjeta.hidden = true; }
   function armar(e) {
@@ -331,7 +337,7 @@ function crearMotor(T, cont) {
     if (!activo) return; requestAnimationFrame(loop);
     const ahora = performance.now(), dt = Math.min(0.05, (ahora - prev) / 1000); prev = ahora; reloj += dt;
     ctl.quieto = Math.max(0, ctl.quieto - dt); if (!sinMovimiento && !ctl.quieto && !toque) ctl.th += dt * 0.25;
-    ctl.th += ctl.vth; ctl.vth *= 0.9;
+    ctl.th += ctl.vth; ctl.vth *= 0.9; ctl.ph += (ctl.meta - ctl.ph) * Math.min(1, dt * 4);
     const d = ctl.dist, o = ctl.objetivo; cam.position.set(o.x + Math.sin(ctl.th) * Math.sin(ctl.ph) * d, o.y + Math.cos(ctl.ph) * d, o.z + Math.cos(ctl.th) * Math.sin(ctl.ph) * d); cam.lookAt(o);
     if (!sinMovimiento) focos.forEach((f, i) => { f.material.opacity = 0.55 + 0.35 * Math.sin(reloj * 2 + i * 1.7); });
     ren.render(esc, cam);
